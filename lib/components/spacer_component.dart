@@ -17,6 +17,8 @@ class SpacerComponent extends StatelessWidget {
     return isFull
         ? const Spacer()
         : SizedBox(
-            height: size, width: isHorizontalSpacer ? size : null, key: key);
+            height: size,
+            width: isHorizontalSpacer ? size : null, key: key);
+          );
   }
 }
