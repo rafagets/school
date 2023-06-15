@@ -47,7 +47,7 @@ class PerfilTab extends StatelessWidget {
           Text('0'),
         ]),
         const SpacerComponent(),
-        const Divider(),
+        const SpacerComponent(isHorizontal: true, isFull: true),
         const SpacerComponent(),
         const Text(
           'Minhas estatísticas',

@@ -1,26 +1,61 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+import '../../components/app_bar_component.dart';
+import 'abas/afazes_tab.dart';
+import 'abas/perfil_tab.dart';
+
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  late int abaSelecionada;
+
+  final List<BottomNavigationBarItem> _abas = [
+    const BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+    const BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: 'Perfil'),
+  ];
+
+  final List<Widget> _conteudos = [
+    AfazeresTab(
+      valorIniciaL: 0,
+      callback: (tabIdx) {
+        print(tabIdx);
+      },
+    ),
+    const PerfilTab(),
+  ];
+
+  void handleTab(int tabIdx) {
+    setState(() {
+      abaSelecionada = tabIdx;
+    });
+  }
+
+  @override
+  void initState() {
+    abaSelecionada = 0;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final List<BottomNavigationBarItem> _abas = [
-      const BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-      const BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: 'Perfil'),
-    ];
-
-    final List<Widget> _conteudos = [
-      const Text('home'),
-      const Text('perfil'),
-    ];
-
     return Scaffold(
-      appBar: AppBar(title: const Text('School')),
-      body: _conteudos.elementAt(1),
+      appBar: const AppBarComponent(),
+      body: _conteudos.elementAt(abaSelecionada),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 1,
+        currentIndex: abaSelecionada,
         items: _abas,
+        onTap: handleTab,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          handleTab(1);
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }
