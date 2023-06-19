@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shcool/components/icon_button_component.dart';
 import 'package:shcool/components/spacer_component.dart';
 import 'package:shcool/entities/afazer_entity.dart';
+import 'package:shcool/pages/home/components/item_widget.dart';
 
 class AfazeresTab extends StatefulWidget {
   const AfazeresTab({
@@ -81,7 +82,12 @@ class _AfazeresTab extends State<AfazeresTab> {
                     handleExcluir(index);
                   }
                 },
-                child: Text(item.titulo),
+                child: ItemWidget(
+                  item: item,
+                  onPressed: () {
+                    handleAdicionar();
+                  },
+                ),
               );
             },
           ),
