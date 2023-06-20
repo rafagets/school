@@ -3,6 +3,7 @@ import 'package:shcool/components/icon_button_component.dart';
 import 'package:shcool/components/spacer_component.dart';
 import 'package:shcool/entities/afazer_entity.dart';
 import 'package:shcool/pages/home/components/item_widget.dart';
+import 'package:shcool/pages/home/components/novo_item_widget.dart';
 
 class AfazeresTab extends StatefulWidget {
   const AfazeresTab({
@@ -17,19 +18,22 @@ class _AfazeresTab extends State<AfazeresTab> {
   late List<AfazerEntity> _listaAfazeres;
 
   void handleAdicionar() {
-    final item = AfazerEntity(
-      uuid: 'teste3',
-      titulo: 'Teste 3',
-      dataInicio: DateTime.now(),
-      dataFim: DateTime.now(),
-      isConcluido: false,
+    showDialog(
+      context: context,
+      builder: (context) {
+        return SimpleDialog(
+          contentPadding: const EdgeInsets.all(16),
+          children: [
+            NovoItemWidget(callback: (item) {
+              _listaAfazeres.add(item);
+              setState(() {
+                _listaAfazeres = _listaAfazeres;
+              });
+            }),
+          ],
+        );
+      },
     );
-
-    _listaAfazeres.add(item);
-
-    setState(() {
-      _listaAfazeres = _listaAfazeres;
-    });
   }
 
   void handleExcluir(int index) {

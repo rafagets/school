@@ -14,7 +14,7 @@ class AfazerEntity {
     required this.titulo,
     required this.dataInicio,
     required this.dataFim,
-    required this.isConcluido,
+    this.isConcluido,
     this.conteudos,
     this.image,
   });
