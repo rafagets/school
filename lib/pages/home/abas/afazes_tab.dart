@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:shcool/components/icon_button_component.dart';
+import 'package:provider/provider.dart';
 import 'package:shcool/components/spacer_component.dart';
 import 'package:shcool/entities/afazer_entity.dart';
 import 'package:shcool/pages/home/components/item_widget.dart';
 import 'package:shcool/pages/home/components/novo_item_widget.dart';
+import 'package:shcool/providers/afazer_provider.dart';
 
 class AfazeresTab extends StatefulWidget {
   const AfazeresTab({
@@ -15,7 +16,7 @@ class AfazeresTab extends StatefulWidget {
 }
 
 class _AfazeresTab extends State<AfazeresTab> {
-  late List<AfazerEntity> _listaAfazeres;
+  late AfazerProvider store;
 
   void handleAdicionar() {
     showDialog(
@@ -25,10 +26,7 @@ class _AfazeresTab extends State<AfazeresTab> {
           contentPadding: const EdgeInsets.all(16),
           children: [
             NovoItemWidget(callback: (item) {
-              _listaAfazeres.add(item);
-              setState(() {
-                _listaAfazeres = _listaAfazeres;
-              });
+              store.listaAfazeres = [...store.listaAfazeres, item];
             }),
           ],
         );
@@ -37,35 +35,21 @@ class _AfazeresTab extends State<AfazeresTab> {
   }
 
   void handleExcluir(int index) {
-    _listaAfazeres.removeAt(index);
-    setState(() {
-      _listaAfazeres = _listaAfazeres;
-    });
+    // _listaAfazeres.removeAt(index);
+    // setState(() {
+    //   _listaAfazeres = _listaAfazeres;
+    // });
   }
 
   @override
   void initState() {
-    _listaAfazeres = [
-      AfazerEntity(
-        uuid: 'teste1',
-        titulo: 'Teste 1',
-        dataInicio: DateTime.now(),
-        dataFim: DateTime.now(),
-        isConcluido: false,
-      ),
-      AfazerEntity(
-        uuid: 'teste2',
-        titulo: 'Teste 2',
-        dataInicio: DateTime.now(),
-        dataFim: DateTime.now(),
-        isConcluido: true,
-      ),
-    ];
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    store = Provider.of<AfazerProvider>(context);
+
     return Column(
       children: [
         ElevatedButton(
@@ -76,9 +60,9 @@ class _AfazeresTab extends State<AfazeresTab> {
           width: MediaQuery.of(context).size.width,
           height: 400,
           child: ListView.builder(
-            itemCount: _listaAfazeres.length,
+            itemCount: store.listaAfazeres.length,
             itemBuilder: (context, index) {
-              final item = _listaAfazeres.elementAt(index);
+              final item = store.listaAfazeres.elementAt(index);
               return Dismissible(
                 key: Key(item.uuid),
                 onDismissed: (direction) {

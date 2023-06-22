@@ -3,6 +3,7 @@ import 'package:shcool/components/icon_button_component.dart';
 import 'package:shcool/components/spacer_component.dart';
 import 'package:shcool/entities/afazer_checklist_enty.dart';
 import 'package:shcool/entities/afazer_entity.dart';
+import 'package:uuid/uuid.dart';
 
 class NovoItemWidget extends StatefulWidget {
   final void Function(AfazerEntity item) callback;
@@ -49,7 +50,7 @@ class _NovoItemWidgetState extends State<NovoItemWidget> {
     final isValido = _formKey.currentState!.validate();
     if (isValido) {
       final item = AfazerEntity(
-        uuid: 'xpto',
+        uuid: const Uuid().v4(),
         titulo: _titleController.text,
         dataInicio: DateTime.now(),
         dataFim: DateTime.now(),
