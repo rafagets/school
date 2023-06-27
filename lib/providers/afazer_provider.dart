@@ -7,6 +7,8 @@ import '../pages/home/components/novo_item_widget.dart';
 class AfazerProvider with ChangeNotifier {
   final service = AfazerService();
   List<AfazerEntity> _listaAfazeres = [];
+  AfazerEntity? _selecionado;
+  int? _idx;
 
   AfazerProvider() {
     buscarAfazeres();
@@ -18,13 +20,30 @@ class AfazerProvider with ChangeNotifier {
 
   List<AfazerEntity> get listaAfazeres => _listaAfazeres;
 
-  void atualizarItemAfazer(int idx, String image) {
-    listaAfazeres.elementAt(idx).image = image;
+  AfazerEntity? get selecionado {
+    return _selecionado;
+  }
+
+  set selecionado(AfazerEntity? val) {
+    _selecionado = val;
     notifyListeners();
+  }
+
+  set idx(int val) {
+    _idx = val;
+    notifyListeners();
+  }
+
+  void atualizarItemAfazer(int idx) {
+    if (selecionado != null) {
+      _listaAfazeres[idx] = _selecionado!;
+      notifyListeners();
+    }
   }
 
   set listaAfazeres(List<AfazerEntity> val) {
     _listaAfazeres = val;
+    service.salvar(_listaAfazeres);
     notifyListeners();
   }
 
